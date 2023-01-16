@@ -20,7 +20,7 @@ routesPublic.get("/", function (req, res) {
 
 
 routesPublic.post("/login",  (req, res) => {
-  
+  console.log("Entering Login Endpoint");
   controller.login(req)
     .then( 
       (data)=> res.json ({data})

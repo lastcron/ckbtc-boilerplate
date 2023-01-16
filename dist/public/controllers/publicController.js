@@ -17,7 +17,33 @@ class publicController {
                 try {
                     const token = (0, loginservice_1.default)({ username: req.body.username });
                     publicendpointLog("Token: " + token);
-                    resolve({ token: token });
+                    //Make the following true to enable session storage in ready. Requires to enable Redis on index.ts
+                    if (true) {
+                        // this variables are just for testing purposes - a database query goes here
+                        let myusername = "usertest";
+                        let mypassword = "password";
+                        if (req.body.username == myusername && req.body.password == mypassword) {
+                            publicendpointLog("User and Password are valid ");
+                            let session = req.session;
+                            session.user = req.body.username;
+                            publicendpointLog("Session: " + session.user);
+                            resolve({
+                                result: "Usuario Valido",
+                                token: token
+                            });
+                        }
+                        else {
+                            publicendpointLog("User and Password invalid ");
+                            resolve({
+                                result: "Usuario Invalido",
+                                token: token
+                            });
+                        }
+                    }
+                    resolve({
+                        result: "Acceso Concedido",
+                        token: token
+                    });
                 }
                 catch (_a) {
                     reject({ error: "Login unexpected error" });

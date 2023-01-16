@@ -18,5 +18,5 @@ index_1.default.use('/', publicroutes_1.default);
 index_1.default.use('/app', protectedroutes_1.default);
 //Starts the express server
 index_1.default.listen(port, () => {
-    server("Server listening on Port", port);
+    server("Server listening on Port: ", port);
 });

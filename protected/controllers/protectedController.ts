@@ -11,10 +11,24 @@ const protectedEndpointLog = debug('HelloWorldAPI:protectedEndpoints');
             protectedEndpointLog('Got body:', req.body);
             protectedEndpointLog("Entering maindashboard: ")
           try {
+            //Make this true to enable session confirmation on this route
+            if (true){
+              let session=req.session;
+              
+              if(session.user){
+                resolve ({message:"protected dashboard, User: " + session.user});
+              } else
+                resolve ({message:"Unathorized Access"});
+            }
+            
             resolve ({message:"protected dashboard"});
+
           }
           catch{
+
+
             reject ({error:"Login unexpected error"});
+
           }
           })
     };
