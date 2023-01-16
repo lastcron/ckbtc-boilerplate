@@ -11,15 +11,15 @@ This Restufl API has been built with production grade quality aimed to distribut
     + Load Balancing
     + SSL Certificates for secure https communication
 * This API will be deployed using a docker container therefore  process manager PM2 is not implemented
-* --PENDING Login Session storage in REDIS is implemented but is optional , you can also persist on MongoDB but the connector is not installed
-* --PENDING Rate Limiting has been implemented
+* Login Session storage in REDIS is implemented but is optional , you can also persist on MongoDB but the connector is not installed
+* Cookie Parser library has been implemented in order make session persistance work
+* Rate Limiting has been implemented
 * Dockerfile is ready and only exports the dist folder
 * Folder Structure follows a standarized MVC template for REST APIs
 * Routes , Controllers and Services are in separated files for each component
 * Public and Protected endpoints are treated in separate components
 * Controllers are built as promises
 * Debug Package has been implemented , define your own namespaces and check the commands in package.json
-* 
 * TypeScript is being used for writing code
 * Junit for Testing and command for test monitoring is in place
 * --PENDING Unit Tests for the existing endpoints are implemented

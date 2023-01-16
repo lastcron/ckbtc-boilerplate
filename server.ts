@@ -18,7 +18,7 @@ App.use('/app',RutasProtegidas );
 
 //Starts the express server
 App.listen(port, () => {
-    server("Server listening on Port", port);
+    server("Server listening on Port: ", port);
 })
 
 
