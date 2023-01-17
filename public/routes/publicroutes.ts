@@ -2,6 +2,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import publicController from '../controllers/publicController';
+import axios from 'axios';
+
+// debug library
+import debug = require('debug');
+import { stringify } from 'querystring';
+// defintion of a logging descriptor
+const publicendpointLog = debug('HelloWorldAPI:publicEndpoints');
 
 
 const routesPublic = express.Router();
@@ -12,10 +19,30 @@ dotenv.config();
 
 routesPublic.get("/", function (req, res) {
 
-  res.json({
-    message:"API ALIVE - CHECK DOCUMENTATION FOR PROPER USAGE"
-  });
+let data: any; 
+//AXIOS TEST REQUEST TO GET BITCOIN PRICE
+axios.get('https://api.coinbase.com/v2/exchange-rates?currency=BTC')
+  .then(response => {
+  
+    data = response.data.data;
+    publicendpointLog("SYMBOL: " + data.currency + " , PRICE: " + data.rates.USD);
 
+    res.json({
+      message:"API ALIVE AND AXIOS REQUEST OK- CHECK DOCUMENTATION FOR PROPER USAGE",
+      currency: data.currency,
+      priceUSD: data.rates.USD
+      
+    });
+    
+  })
+  .catch(error => {
+    publicendpointLog("Error: " + error);
+    
+    res.json({
+      message:"API ALIVE - Error Detected"
+      
+    });
+  });
 });
 
 
