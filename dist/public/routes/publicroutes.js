@@ -37,8 +37,43 @@ routesPublic.get("/", function (req, res) {
 });
 routesPublic.post("/login", (req, res) => {
     console.log("Entering Login Endpoint");
+    const loginPromiseResponse = {
+        result: String,
+        token: String,
+        refreshToken: String
+    };
     controller.login(req)
-        .then((data) => res.json({ data }))
+        .then((loginPromiseResponse) => {
+        const result = loginPromiseResponse.result;
+        const token = loginPromiseResponse.token;
+        const refreshToken = loginPromiseResponse.refreshToken;
+        //Assigning refresh token in http-only cookie 1 Day
+        res.cookie('jwt', refreshToken, { httpOnly: true,
+            sameSite: 'none', secure: true,
+            maxAge: 24 * 60 * 60 * 1000 });
+        res.json({
+            result, token
+        });
+    })
+        .catch((err) => res.json({ err }));
+});
+routesPublic.post("/refresh", (req, res) => {
+    console.log("Entering Refresh Endpoint");
+    const refreshPromiseResponse = {
+        message: String,
+        ResponseCode: String,
+        Token: String
+    };
+    controller.refresh(req)
+        .then((refreshPromiseResponse) => {
+        const message = refreshPromiseResponse.message;
+        const token = refreshPromiseResponse.Token;
+        const ResponseCode = refreshPromiseResponse.ResponseCode;
+        res.status(ResponseCode);
+        res.json({
+            message, token, ResponseCode
+        });
+    })
         .catch((err) => res.json({ err }));
 });
 // recover password. ( Needs to be a Post instead of a GET - It is intentionally a GET for Testing Purposes only)

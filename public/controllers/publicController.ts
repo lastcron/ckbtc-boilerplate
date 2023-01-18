@@ -1,4 +1,8 @@
-import generateAccessToken from '../services/loginservice';
+import {generateAccessToken,generateRefreshToken} from '../services/loginservice';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // debug library
 import debug = require('debug');
@@ -7,7 +11,8 @@ const publicendpointLog = debug('HelloWorldAPI:publicEndpoints');
 
 interface loginResponse {
     result: string,
-    token: string;
+    token: string,
+    refreshToken: string
   }
   
   export default class publicController {
@@ -21,6 +26,10 @@ interface loginResponse {
 
           try {
             const token = generateAccessToken({ username: req.body.username });
+            const Refreshtoken = generateRefreshToken({ username: req.body.username });
+            
+               
+
             publicendpointLog("Token: " + token)
             
               //Make the following true to enable session storage in ready. Requires to enable Redis on index.ts
@@ -35,12 +44,14 @@ interface loginResponse {
 
                   let session=req.session;
                   session.user=req.body.username;
+
                   
                   publicendpointLog( "Session: " + session.user)
                   
                   resolve({
                     result: "Usuario Valido",
-                    token:token
+                    token:token,
+                    refreshToken: Refreshtoken
                   });
               }
               else {
@@ -48,7 +59,8 @@ interface loginResponse {
                 
                 resolve({
                   result: "Usuario Invalido",
-                  token:token
+                  token:token,
+                  refreshToken: Refreshtoken
                 });
 
               }
@@ -56,7 +68,8 @@ interface loginResponse {
 
               resolve({
                 result: "Acceso Concedido",
-                token:token
+                token:token,
+                refreshToken: Refreshtoken
               });
 
           }
@@ -65,6 +78,61 @@ interface loginResponse {
           }
           })
     };
+
+    public refresh = (req: any) => { 
+      return new Promise ( (resolve,reject) => {
+      
+        publicendpointLog("Entering refresh ")
+
+      try {
+        
+        
+
+        if (req.cookies?.jwt) {
+
+          // Destructuring refreshToken from cookie
+          const refreshToken = req.cookies.jwt;
+          publicendpointLog("RefreshToken: " + refreshToken)
+          // Verifying refresh token
+          jwt.verify(refreshToken, process.env.REFRESH_SECRET as string, 
+          (err: any, decoded: any) => {
+              if (err) {
+                  // Wrong Refesh Token
+                  resolve ({
+                    message: 'Unauthorized',
+                    ResponseCode: '406',
+                    Token:'NA'
+                  })
+              }
+              else {
+                  // Correct token we send a new access token
+                  const accessToken = jwt.sign({
+                      username: req.body.username,
+                  }, process.env.TOKEN_SECRET as string, {
+                      expiresIn: '10m'
+                  });
+                  resolve ({
+                    message: 'Authorized',
+                    ResponseCode: '200',
+                    Token:accessToken
+                  })
+              }
+          })
+      } else {
+        publicendpointLog("No Cookies")
+        resolve ({
+          message: 'Unauthorized',
+          ResponseCode: '406',
+          Token:'NA'
+        })
+      }
+
+      }
+      catch{
+        reject ({error:"Login unexpected error"});
+      }
+      })
+};
     
 
     public  recover = (req: any) => {

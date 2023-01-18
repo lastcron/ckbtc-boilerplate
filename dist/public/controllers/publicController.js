@@ -3,7 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const loginservice_1 = __importDefault(require("../services/loginservice"));
+const loginservice_1 = require("../services/loginservice");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 // debug library
 const debug = require("debug");
 // defintion of a logging descriptor
@@ -15,7 +18,8 @@ class publicController {
                 publicendpointLog('Got body:', req.body);
                 publicendpointLog("Entering login: " + req.body.username);
                 try {
-                    const token = (0, loginservice_1.default)({ username: req.body.username });
+                    const token = (0, loginservice_1.generateAccessToken)({ username: req.body.username });
+                    const Refreshtoken = (0, loginservice_1.generateRefreshToken)({ username: req.body.username });
                     publicendpointLog("Token: " + token);
                     //Make the following true to enable session storage in ready. Requires to enable Redis on index.ts
                     if (true) {
@@ -29,23 +33,74 @@ class publicController {
                             publicendpointLog("Session: " + session.user);
                             resolve({
                                 result: "Usuario Valido",
-                                token: token
+                                token: token,
+                                refreshToken: Refreshtoken
                             });
                         }
                         else {
                             publicendpointLog("User and Password invalid ");
                             resolve({
                                 result: "Usuario Invalido",
-                                token: token
+                                token: token,
+                                refreshToken: Refreshtoken
                             });
                         }
                     }
                     resolve({
                         result: "Acceso Concedido",
-                        token: token
+                        token: token,
+                        refreshToken: Refreshtoken
                     });
                 }
                 catch (_a) {
+                    reject({ error: "Login unexpected error" });
+                }
+            });
+        };
+        this.refresh = (req) => {
+            return new Promise((resolve, reject) => {
+                var _a;
+                publicendpointLog("Entering refresh ");
+                try {
+                    if ((_a = req.cookies) === null || _a === void 0 ? void 0 : _a.jwt) {
+                        // Destructuring refreshToken from cookie
+                        const refreshToken = req.cookies.jwt;
+                        publicendpointLog("RefreshToken: " + refreshToken);
+                        // Verifying refresh token
+                        jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESH_SECRET, (err, decoded) => {
+                            if (err) {
+                                // Wrong Refesh Token
+                                resolve({
+                                    message: 'Unauthorized',
+                                    ResponseCode: '406',
+                                    Token: 'NA'
+                                });
+                            }
+                            else {
+                                // Correct token we send a new access token
+                                const accessToken = jsonwebtoken_1.default.sign({
+                                    username: req.body.username,
+                                }, process.env.TOKEN_SECRET, {
+                                    expiresIn: '10m'
+                                });
+                                resolve({
+                                    message: 'Authorized',
+                                    ResponseCode: '200',
+                                    Token: accessToken
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        publicendpointLog("No Cookies");
+                        resolve({
+                            message: 'Unauthorized',
+                            ResponseCode: '406',
+                            Token: 'NA'
+                        });
+                    }
+                }
+                catch (_b) {
                     reject({ error: "Login unexpected error" });
                 }
             });
