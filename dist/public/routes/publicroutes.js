@@ -10,7 +10,7 @@ const axios_1 = __importDefault(require("axios"));
 // debug library
 const debug = require("debug");
 // defintion of a logging descriptor
-const publicendpointLog = debug('HelloWorldAPI:publicEndpoints');
+const publicendpointLog = debug('ckBTC-PaymentConnector:publicEndpoints');
 const routesPublic = express_1.default.Router();
 const controller = new publicController_1.default();
 // Get config vars
@@ -35,6 +35,7 @@ routesPublic.get("/", function (req, res) {
         });
     });
 });
+//login a user and gets a JWT
 routesPublic.post("/login", (req, res) => {
     console.log("Entering Login Endpoint");
     const loginPromiseResponse = {
@@ -47,16 +48,17 @@ routesPublic.post("/login", (req, res) => {
         const result = loginPromiseResponse.result;
         const token = loginPromiseResponse.token;
         const refreshToken = loginPromiseResponse.refreshToken;
-        //Assigning refresh token in http-only cookie 1 Day
+        //Assigning refresh token in http-only cookie 365 Day
         res.cookie('jwt', refreshToken, { httpOnly: true,
             sameSite: 'none', secure: true,
-            maxAge: 24 * 60 * 60 * 1000 });
+            maxAge: 365 * 24 * 60 * 60 * 1000 });
         res.json({
             result, token
         });
     })
         .catch((err) => res.json({ err }));
 });
+//refresh JWT
 routesPublic.post("/refresh", (req, res) => {
     console.log("Entering Refresh Endpoint");
     const refreshPromiseResponse = {
@@ -76,14 +78,14 @@ routesPublic.post("/refresh", (req, res) => {
     })
         .catch((err) => res.json({ err }));
 });
-// recover password. ( Needs to be a Post instead of a GET - It is intentionally a GET for Testing Purposes only)
-routesPublic.get("/recover", (req, res) => {
+// recover password. 
+routesPublic.post("/recover", (req, res) => {
     controller.recover(req)
         .then((data) => res.json({ data }))
         .catch((err) => res.json({ err }));
 });
-// OTP password. ( Needs to be a Post instead of a GET - It is intentionally a GET for Testing Purposes only)
-routesPublic.get("/register", (req, res) => {
+// Register a user. 
+routesPublic.post("/register", (req, res) => {
     controller.register(req)
         .then((data) => res.json({ data }))
         .catch((err) => res.json({ err }));

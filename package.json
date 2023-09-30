@@ -1,36 +1,38 @@
 {
-  "name": "dev.memocontreras.helloworld-api",
+  "name": "dev.mimocontreras.ckbtc",
   "version": "1.0.0",
-  "description": "Senior Dev Hello World API",
+  "description": "ckBTC Payment Conector",
   "main": "server.js",
   "scripts": {
     "test": "jest",
     "test:watchall": "jest --watchAll",
     "start": "nodemon dist/server.js",
     "runprod": "node dist/server.js",
-    "rundev": "tsc -w & DEBUG=HelloWorldAPI:* nodemon dist/server.js"
+    "rundev": "tsc -w & DEBUG=ckBTC-PaymentConnector:* nodemon dist/server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lastcron/seniordev-helloworld-apirest-template.git"
+    "url": "git+ "
   },
   "keywords": [
-    "apirest",
-    "helloworld"
+    "ckBTC",
+    "Bitcoin"
   ],
-  "author": "Mimo Contreras",
+  "author": "DitoBanx",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/lastcron/seniordev-helloworld-apirest-template/issues"
+    "url": " "
   },
-  "homepage": "https://github.com/lastcron/seniordev-helloworld-apirest-template#readme",
+  "homepage": " ",
   "dependencies": {
     "axios": "^1.2.2",
     "body-parser": "^1.20.1",
+    "compress-json": "^2.1.2",
     "compression": "^1.7.4",
     "connect-redis": "^6.1.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "debug": "^4.3.4",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -42,6 +44,7 @@
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
     "treblle": "^1.3.0",
+    "url-safe-base64": "^1.3.0",
     "yarn": "^1.22.19"
   },
   "devDependencies": {

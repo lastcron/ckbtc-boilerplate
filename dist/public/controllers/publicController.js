@@ -10,50 +10,88 @@ dotenv_1.default.config();
 // debug library
 const debug = require("debug");
 // defintion of a logging descriptor
-const publicendpointLog = debug('HelloWorldAPI:publicEndpoints');
+const publicendpointLog = debug('ckBTC-PaymentConnector:publicEndpoints');
 class publicController {
     constructor() {
         this.login = (req) => {
             return new Promise((resolve, reject) => {
-                publicendpointLog('Got body:', req.body);
-                publicendpointLog("Entering login: " + req.body.username);
                 try {
-                    const token = (0, loginservice_1.generateAccessToken)({ username: req.body.username });
-                    const Refreshtoken = (0, loginservice_1.generateRefreshToken)({ username: req.body.username });
-                    publicendpointLog("Token: " + token);
-                    //Make the following true to enable session storage in ready. Requires to enable Redis on index.ts
+                    // Log the raw body and entering message
+                    publicendpointLog('Raw Body:', req.rawBody);
+                    publicendpointLog('Got body:', req.body);
+                    publicendpointLog("Entering login ");
+                    // Enable this authentication method if you are using dynamic users
                     if (true) {
-                        // this variables are just for testing purposes - a database query goes here
-                        let myusername = "usertest";
-                        let mypassword = "password";
+                        // Extract user and password from the request body
+                        const user = req.body.username;
+                        const password = req.body.password;
+                        // Check if user and password are provided
+                        if (!user || !password) {
+                            resolve({
+                                result: "Invalid User or Password",
+                                token: '',
+                                refreshToken: ''
+                            });
+                            return;
+                        }
+                        const myusername = "usertest";
+                        const mypassword = "password";
                         if (req.body.username == myusername && req.body.password == mypassword) {
                             publicendpointLog("User and Password are valid ");
-                            let session = req.session;
-                            session.user = req.body.username;
-                            publicendpointLog("Session: " + session.user);
+                            // Generate tokens and handle session
+                            const token = (0, loginservice_1.generateAccessToken)({ username: req.body.username });
+                            const refreshToken = (0, loginservice_1.generateRefreshToken)({ username: req.body.username });
+                            publicendpointLog("Token: " + token);
+                            publicendpointLog("Req Session: " + req.session);
+                            if (req.session) {
+                                const session = req.session;
+                                session.user = req.body.username;
+                                publicendpointLog("Session: " + session.user);
+                            }
                             resolve({
-                                result: "Usuario Valido",
+                                result: "Valid User",
                                 token: token,
-                                refreshToken: Refreshtoken
+                                refreshToken: refreshToken
                             });
                         }
                         else {
                             publicendpointLog("User and Password invalid ");
                             resolve({
-                                result: "Usuario Invalido",
-                                token: token,
-                                refreshToken: Refreshtoken
+                                result: "User not authorized",
+                                token: '',
+                                refreshToken: ''
                             });
                         }
                     }
-                    resolve({
-                        result: "Acceso Concedido",
-                        token: token,
-                        refreshToken: Refreshtoken
-                    });
+                    else {
+                        // Check if static API KEY is valid
+                        const static_apikey = 'eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJja0JUQyIsIlVzZXJuYW1lIjoiY2tCVENBcGkiLCJleHAiOjE5MTY5NzM2NjMsImlhdCI6MTY5NjA0ODg2M30';
+                        publicendpointLog("Header ApiKey : " + req.headers.apikey);
+                        publicendpointLog("Static ApiKey : " + static_apikey);
+                        if (static_apikey == req.headers.apikey) {
+                            // Generate tokens for authorized user
+                            const token = (0, loginservice_1.generateAccessToken)({ username: req.body.username });
+                            const refreshToken = (0, loginservice_1.generateRefreshToken)({ username: req.body.username });
+                            publicendpointLog("Token: " + token);
+                            resolve({
+                                result: "User Authorized",
+                                token: token,
+                                refreshToken: refreshToken
+                            });
+                        }
+                        else {
+                            // Handle invalid API Key
+                            resolve({
+                                result: "Invalid ApiKey",
+                                token: '',
+                                refreshToken: ''
+                            });
+                        }
+                    }
                 }
-                catch (_a) {
-                    reject({ error: "Login unexpected error" });
+                catch (error) {
+                    // Handle unexpected errors
+                    reject({ error: "Login unexpected error", message: error });
                 }
             });
         };

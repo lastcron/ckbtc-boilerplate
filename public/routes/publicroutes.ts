@@ -8,7 +8,7 @@ import axios from 'axios';
 import debug = require('debug');
 
 // defintion of a logging descriptor
-const publicendpointLog = debug('HelloWorldAPI:publicEndpoints');
+const publicendpointLog = debug('ckBTC-PaymentConnector:publicEndpoints');
 
 
 const routesPublic = express.Router();
@@ -46,7 +46,7 @@ axios.get('https://api.coinbase.com/v2/exchange-rates?currency=BTC')
 });
 
 
-
+//login a user and gets a JWT
 routesPublic.post("/login",  (req, res) => {
   console.log("Entering Login Endpoint");
   const loginPromiseResponse = {
@@ -62,10 +62,10 @@ routesPublic.post("/login",  (req, res) => {
         const token = loginPromiseResponse.token;
         const refreshToken = loginPromiseResponse.refreshToken;
         
-        //Assigning refresh token in http-only cookie 1 Day
+        //Assigning refresh token in http-only cookie 365 Day
         res.cookie('jwt', refreshToken, { httpOnly: true, 
         sameSite: 'none', secure: true, 
-        maxAge: 24 * 60 * 60 * 1000 });
+        maxAge: 365 * 24 * 60 * 60 * 1000 });
           
         res.json(
           {
@@ -81,6 +81,7 @@ routesPublic.post("/login",  (req, res) => {
   
 });
 
+//refresh JWT
 routesPublic.post("/refresh",  (req, res) => {
   console.log("Entering Refresh Endpoint");
   const refreshPromiseResponse = {
@@ -111,10 +112,8 @@ routesPublic.post("/refresh",  (req, res) => {
   
 });
 
-
-  
-// recover password. ( Needs to be a Post instead of a GET - It is intentionally a GET for Testing Purposes only)
-routesPublic.get("/recover",  (req, res) => {
+// recover password. 
+routesPublic.post("/recover",  (req, res) => {
 
   controller.recover(req)
     .then( 
@@ -125,8 +124,8 @@ routesPublic.get("/recover",  (req, res) => {
     ) 
   });
 
-// OTP password. ( Needs to be a Post instead of a GET - It is intentionally a GET for Testing Purposes only)
-routesPublic.get("/register",  (req, res) => {
+// Register a user. 
+routesPublic.post("/register",  (req, res) => {
     
   controller.register(req)
     .then( 

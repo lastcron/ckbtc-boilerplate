@@ -1,17 +1,33 @@
-## NodeJS Express API REST Boiler Plate
+## ckBTC-PaymentConnector
+PUBLIC ENDPOINTS
+/ - Checks API Status
+/login - In case a dynamic user validation is integrated
+/refresh - In case a dynamic user validation is integrated
+/recover - In case a dynamic user validation is integrated
+/register - - In case a dynamic user validation is integrated
 
-License: unlicensed
+PROTECTED ENDPOINTS
+/ - Query AUTH Status
+/user-balance - Query Balance for a user
+/payment-request - Query Payment information for a user from the database. Gets user address and creates a transaction with a pending state
+/payment-status - Query the Status of a Transaction on the blockchain and saves it to database
+/payment-received - Query the Status of a Transaction on the database
 
-##### Important Notes
+TESTING JWT TOKEN
+eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJja0JUQyIsIlVzZXJuYW1lIjoiY2tCVENBcGkiLCJleHAiOjE5MTY5NzM2NjMsImlhdCI6MTY5NjA0ODg2M30
 
-This Restufl API has been built with production grade quality aimed to distributed infrastucutures in mind. Below is a detailed summary of the Best Practices taken in place:
+##### VERY Important Notes. READ BEFORE IMPLEMENTING
+
+This Restufl API has been built with production grade quality aimed to distributed infrastructuress in mind. Below is a detailed summary of the Best Practices taken in place:
+
+* FOR QUICK TESTING OPEN POSTMAN AND MAKE A GET REQUEST TO  127.0.0.1:3000
 
 * This API will be behind a reverse proxy server like Nginx which will take care of:
     + Reverse Proxying
     + Load Balancing
     + SSL Certificates for secure https communication
 * This API will be deployed using a docker container therefore  process manager PM2 is not implemented
-* Login Session storage in REDIS is implemented but is optional , you can also persist on MongoDB but the connector is not installed
+* Login Session storage in REDIS is implemented but is optional , you can also persist on MongoDB but the connector is not installed. Redis Disabling is done in line 32 of index.ts
 * Cookie Parser library has been implemented in order make session persistance work
 * Rate Limiting has been implemented
 * Dockerfile is ready and only exports the dist folder
@@ -19,11 +35,11 @@ This Restufl API has been built with production grade quality aimed to distribut
 * Routes , Controllers and Services are in separated files for each component
 * Public and Protected endpoints are treated in separate components
 * Controllers are built as promises
-* Debug Package has been implemented , define your own namespaces and check the commands in package.json
+* Debug Package has been implemented , define your own namespaces and check the commands in package.json. Run dev environmene with: npm run rundev
 * TypeScript is being used for writing code
 * Junit for Testing and command for test monitoring is in place
 * --PENDING Unit Tests for the existing endpoints are implemented
-* Express and Body-Parser libs installed and working
+* Express and Body-Parser libs installed and working. RawBody parser besides json has been implemented. Check line 101 in index.ts
 * git.ignore already configure to prevent node_modules and coverage to be uploaded
 * yarn package manager installed in dev dependencies
 * nodemon already installed in dev dependencies
@@ -31,13 +47,13 @@ This Restufl API has been built with production grade quality aimed to distribut
 * treblle.com for Api monitoring and documentation is installed * ADD YOUR API KEY IN THE .ENV FILE
 * CORS  is implemented in all endopoints
 * GZIP Compression enabled
-* JWT Token has been implmented along with public endpoints and protected endpoints
+* JWT Token has been implmented along with public endpoints and protected endpoints. * Change Token secret and Refresh Secert on the .env file
 * Morgan package added which Log requests to console
 * A separated version of this API using GraphQL is being done
 * Axios Installed for externarl api requests
 
 
-##### Next Steps:
+##### Next Steps for connecting to your database.:
 * If using any SQL Data layer for persistance,  next step would be to add Sequalize. https://sequelize.org/docs/v6/getting-started/ 
 * If using NoSQL like MongoDB for persistance , next step would be to add the connector
 
