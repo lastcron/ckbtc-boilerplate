@@ -7,14 +7,20 @@ PUBLIC ENDPOINTS
 /register - - In case a dynamic user validation is integrated
 
 PROTECTED ENDPOINTS
-/ - Query AUTH Status
-/user-balance - Query Balance for a user
-/payment-request - Query Payment information for a user from the database. Gets user address and creates a transaction with a pending state
-/payment-status - Query the Status of a Transaction on the blockchain and saves it to database
-/payment-received - Query the Status of a Transaction on the database
+Protected endpooints require an 'authorization' headers with the JWT token returned by the public /login enddpoint suffixed by the word "bearer"
+
+/app/ - Query AUTH Status
+/app/user-balance - Query Balance for a user
+/app/payment-request - Query Payment information for a user from the database. Gets user address and creates a transaction with a pending state
+/app/payment-status - Query the Status of a Transaction on the blockchain and saves it to database
+/app/payment-received - Query the Status of a Transaction on the database
+/app/payment-history - Query the payment history for the user
 
 TESTING JWT TOKEN
 eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJja0JUQyIsIlVzZXJuYW1lIjoiY2tCVENBcGkiLCJleHAiOjE5MTY5NzM2NjMsImlhdCI6MTY5NjA0ODg2M30
+
+MySQL CONTAINER COMMAND FOR TESTING
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
 
 ##### VERY Important Notes. READ BEFORE IMPLEMENTING
 

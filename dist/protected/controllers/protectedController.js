@@ -9,9 +9,9 @@ class publicController {
         //Query AUTH Status
         this.authstatus = (req) => {
             return new Promise((resolve, reject) => {
-                protectedEndpointLog('Got body:', req.body);
-                protectedEndpointLog("Entering maindashboard: ");
                 try {
+                    protectedEndpointLog('Got body:', req.body);
+                    protectedEndpointLog("Entering authStatus");
                     //Make this true to enable session confirmation on this route
                     if (false) {
                         let session = req.session;
@@ -31,23 +31,49 @@ class publicController {
         //Query Balance for a user
         this.user_balance = (req) => {
             return new Promise((resolve, reject) => {
-                protectedEndpointLog('Got body:', req.body);
-                protectedEndpointLog("Entering Module 1: ");
                 try {
-                    resolve({ message: "protected Module 1" });
+                    protectedEndpointLog("Entering Controller UserBalance");
+                    protectedEndpointLog('Request Query Paramas: ', req.query);
+                    protectedEndpointLog('Got body:', req.body);
+                    protectedEndpointLog('----------------------');
+                    if (req.query.user) {
+                        protectedEndpointLog('User: ', req.query.user);
+                        const user = req.query.user;
+                        //Check address on the database
+                        //Make a request to the blockchain to check balance
+                        resolve({ message: "protected-UserBalance is X" });
+                    }
+                    else {
+                        reject({ error: "User missing on request" });
+                    }
                 }
                 catch (_a) {
-                    reject({ error: "Login unexpected error" });
+                    reject({ error: "User Balance unexpected error" });
                 }
             });
         };
         //Query Payment information for a user from the database. Gets user address and creates a transaction with a pending state 
         this.payment_request = (req) => {
             return new Promise((resolve, reject) => {
-                protectedEndpointLog('Got body:', req.body);
-                protectedEndpointLog("Entering payment_request: ");
                 try {
-                    resolve({ message: "protected payment_request" });
+                    protectedEndpointLog("Entering Controller payment_request");
+                    protectedEndpointLog('Request Query Paramas: ', req.query);
+                    protectedEndpointLog('Got body:', req.body);
+                    protectedEndpointLog('----------------------');
+                    if (req.query.user && req.query.amount && req.query.terminal) {
+                        protectedEndpointLog('User: ', req.query.user);
+                        protectedEndpointLog('Amount : ', req.query.amount);
+                        protectedEndpointLog('Terminal : ', req.query.terminal);
+                        const user = req.query.user;
+                        const amount = req.query.amount;
+                        const terminal = req.query.terminal;
+                        //save payment request with status pending on the database
+                        //return object with qrcode and paymentid
+                        resolve({ address: "protected payment_request", payment_id: "XXX" });
+                    }
+                    else {
+                        reject({ error: "User , Amount or Terminal missing on request" });
+                    }
                 }
                 catch (_a) {
                     reject({ error: "payment_request unexpected error" });
@@ -57,10 +83,23 @@ class publicController {
         // Query the Status of a Transaction on the blockchain and saves it to database
         this.payment_status = (req) => {
             return new Promise((resolve, reject) => {
-                protectedEndpointLog('Got body:', req.body);
-                protectedEndpointLog("Entering payment_status: ");
                 try {
-                    resolve({ message: "protected payment_status" });
+                    protectedEndpointLog("Entering payment_status");
+                    protectedEndpointLog('Request Query Paramas: ', req.query);
+                    protectedEndpointLog('Got body:', req.body);
+                    protectedEndpointLog('----------------------');
+                    if (req.query.user && req.query.payment_id) {
+                        protectedEndpointLog('User: ', req.query.user);
+                        protectedEndpointLog('Payment_id : ', req.query.payment_id);
+                        const user = req.query.user;
+                        const payment_id = req.query.payment_id;
+                        //Check payment_id status on the database
+                        //return object with payment satus
+                        resolve({ status: "Not Payed", payment_id: "XXX" });
+                    }
+                    else {
+                        reject({ error: "User or Payment ID missing on request" });
+                    }
                 }
                 catch (_a) {
                     reject({ error: "payment_status unexpected error" });
@@ -70,13 +109,48 @@ class publicController {
         //Query the Status of a Transaction on the database
         this.payment_received = (req) => {
             return new Promise((resolve, reject) => {
-                protectedEndpointLog('Got body:', req.body);
-                protectedEndpointLog("payment_received: ");
                 try {
+                    protectedEndpointLog("Entering payment_received");
+                    protectedEndpointLog('Request Query Paramas: ', req.query);
+                    protectedEndpointLog('Got body:', req.body);
+                    protectedEndpointLog('----------------------');
+                    if (req.body) {
+                        protectedEndpointLog('Body: ', req.body);
+                        const payment = req.body.payment;
+                        //update payment  on the database
+                        resolve({ Status: "Received" });
+                    }
+                    else {
+                        reject({ error: "Body missing on request" });
+                    }
                     resolve({ message: "protected payment_received" });
                 }
                 catch (_a) {
                     reject({ error: "payment_received unexpected error" });
+                }
+            });
+        };
+        //Query the Payment History for  a user
+        this.payment_history = (req) => {
+            return new Promise((resolve, reject) => {
+                try {
+                    protectedEndpointLog("Entering payment_history");
+                    protectedEndpointLog('Request Query Paramas: ', req.query);
+                    protectedEndpointLog('Got body:', req.body);
+                    protectedEndpointLog('----------------------');
+                    if (req.query.user) {
+                        protectedEndpointLog('user: ', req.query.user);
+                        const user = req.query.user;
+                        //check history  on the database
+                        // Return object with the history of payment
+                        resolve({ history: "[]" });
+                    }
+                    else {
+                        reject({ error: "User missing on request" });
+                    }
+                }
+                catch (_a) {
+                    reject({ error: "payment_history unexpected error" });
                 }
             });
         };

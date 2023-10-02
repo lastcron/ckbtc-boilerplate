@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // debug library
-import debug = require('debug');
-import session = require('express-session');
+import debug from 'debug';
+import session from'express-session';
 // defintion of a logging descriptor
 const publicendpointLog = debug('ckBTC-PaymentConnector:publicEndpoints');
 
@@ -28,7 +28,7 @@ interface loginResponse {
           publicendpointLog("Entering login ");
     
           // Enable this authentication method if you are using dynamic users
-          if (true) {
+          if (false) {
 
             // Extract user and password from the request body
           const user = req.body.username;
@@ -67,7 +67,7 @@ interface loginResponse {
                 token: token,
                 refreshToken: refreshToken
               });
-              
+
             } else {
               publicendpointLog("User and Password invalid ");
               resolve({
@@ -78,7 +78,7 @@ interface loginResponse {
             }
           } else {
             // Check if static API KEY is valid
-            const static_apikey = 'eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJja0JUQyIsIlVzZXJuYW1lIjoiY2tCVENBcGkiLCJleHAiOjE5MTY5NzM2NjMsImlhdCI6MTY5NjA0ODg2M30';
+            const static_apikey = process.env.APIKEY;
             publicendpointLog("Header ApiKey : " + req.headers.apikey);
             publicendpointLog("Static ApiKey : " + static_apikey);
     

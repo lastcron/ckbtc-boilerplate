@@ -8,9 +8,9 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 // debug library
-const debug = require("debug");
+const debug_1 = __importDefault(require("debug"));
 // defintion of a logging descriptor
-const publicendpointLog = debug('ckBTC-PaymentConnector:publicEndpoints');
+const publicendpointLog = (0, debug_1.default)('ckBTC-PaymentConnector:publicEndpoints');
 class publicController {
     constructor() {
         this.login = (req) => {
@@ -21,7 +21,7 @@ class publicController {
                     publicendpointLog('Got body:', req.body);
                     publicendpointLog("Entering login ");
                     // Enable this authentication method if you are using dynamic users
-                    if (true) {
+                    if (false) {
                         // Extract user and password from the request body
                         const user = req.body.username;
                         const password = req.body.password;
@@ -65,7 +65,7 @@ class publicController {
                     }
                     else {
                         // Check if static API KEY is valid
-                        const static_apikey = 'eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJja0JUQyIsIlVzZXJuYW1lIjoiY2tCVENBcGkiLCJleHAiOjE5MTY5NzM2NjMsImlhdCI6MTY5NjA0ODg2M30';
+                        const static_apikey = process.env.APIKEY;
                         publicendpointLog("Header ApiKey : " + req.headers.apikey);
                         publicendpointLog("Static ApiKey : " + static_apikey);
                         if (static_apikey == req.headers.apikey) {

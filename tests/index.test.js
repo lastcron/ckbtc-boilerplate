@@ -1,4 +1,4 @@
-describe("helloworld-api",() => {
+describe("ckBTC-api",() => {
 
     test ("test", () => {
         expect(true).toBe(true);
