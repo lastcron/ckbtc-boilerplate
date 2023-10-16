@@ -1,6 +1,8 @@
 import App from "./index";
 import PublicRoutes from "./public/routes/publicroutes";
 import ProtectedRoutes from "./protected/routes/protectedroutes";
+import sequelizeConnection from './db/config';
+import User from './db/models/user';
 
 // debug library
 import debug = require('debug');
@@ -17,8 +19,23 @@ App.use('/',PublicRoutes );
 App.use('/app',ProtectedRoutes );
 
 //Starts the express server
-App.listen(port, () => {
+App.listen(port, async () => {
     server("Server listening on Port: ", port);
+    try {
+        await sequelizeConnection.authenticate();
+        console.log('Connection to databse has been established successfully.');
+        //Checks if the User tables exits otherwise it creates it. If the NODE_ENV file is set to 'development' it will alsto apply any new 
+        //changes of the model.
+        const isDev = process.env.NODE_ENV === 'development';
+        
+        const dbInit = () => {
+        User.sync({ alter: isDev });
+        }
+
+
+      } catch (error) {
+        console.error('Unable to connect to the database:', error);
+      }
 })
 
 

@@ -1,3 +1,10 @@
+
+// importing sequelize connection and libraries
+import { Sequelize,Op, Model, DataTypes } from 'sequelize'
+import sequelizeConnection from '../../db/config';
+const sequelize = sequelizeConnection;
+import User from '../../db/models/user';
+
 // debug library
 import debug = require('debug');
 // defintion of a logging descriptor
@@ -7,8 +14,8 @@ const protectedEndpointLog = debug('ckBTC-PaymentConnector:protectedEndpoints');
 
 
 //Query AUTH Status
-    public authstatus = (req: any) => { 
-          return new Promise <any> ( (resolve,reject) => {
+    public authstatus =  (req: any) => { 
+          return new Promise <any> ( async (resolve,reject) => {
         
           try {
             protectedEndpointLog('Got body:', req.body);
@@ -22,8 +29,18 @@ const protectedEndpointLog = debug('ckBTC-PaymentConnector:protectedEndpoints');
               } else
                 resolve ({message:"Authorization - FAILED"});
             }
+
+            const usercount = await User.findAndCountAll();
+            let dbstatus= false;
+            if (usercount.count > 0){
+              dbstatus = true;
+            } else {
+              dbstatus = false;
+            }
             
-            resolve ({message:"Authorization - PASSED"});
+
+
+            resolve ({message:"Authorization - PASSED",dbstatus:dbstatus});
 
           }
           catch{
