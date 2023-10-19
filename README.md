@@ -1,5 +1,5 @@
 ## ckBTC-PaymentConnector
-PUBLIC ENDPOINTS 
+PUBLIC ENDPOINTS  
 / - Checks API Status  
 /login - In case a dynamic user validation is integrated  
 /refresh - In case a dynamic user validation is integrated   
@@ -22,9 +22,9 @@ eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJja0JUQyIsIlVzZXJuYW1lIjoiY2tCVENBcGkiLCJleHAi
 MySQL CONTAINER COMMAND FOR TESTING  
 docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=password -d mysql:tag  
 
-##### VERY Important Notes. READ BEFORE IMPLEMENTING  
+##### VERY IMPORTANT NOTES. READ BEFORE IMPLEMENTING  
 
-This Restufl API has been built with production grade quality aimed to distributed infrastructuress in mind. Below is a detailed summary of the Best Practices taken in place:  
+This Restful API has been built with production grade quality aimed to distributed infrastructuress in mind. Below is a detailed summary of the Best Practices taken in place:  
 
 * FOR QUICK TESTING OPEN POSTMAN AND MAKE A GET REQUEST TO  127.0.0.1:3000  
 
