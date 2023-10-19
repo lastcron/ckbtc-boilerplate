@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-
+import debug = require('debug');
+const protectedEndpointLog = debug('ckBTC-PaymentConnector:protectedEndpoints'); 
 //Loding env variables
 dotenv.config();
 
@@ -25,9 +26,8 @@ function authenticateToken(req:any , res: any, next: any) {
         console.log(err)
         return res.sendStatus(403)
     } else {
-        //if the token is valid asign the user to the req.user object
-        console.log(user)
-        req.user = user
+        
+        protectedEndpointLog("JWT VALID");
         
     }
     // continue execution
