@@ -91,6 +91,8 @@ class publicController {
                         const amount = req.query.amount;
                         const terminal = req.query.terminal;
                         //save payment request with status pending on the database
+                        const payload = {};
+                        transactionService.create(payload);
                         //return object with qrcode and paymentid
                         resolve({ address: "protected payment_request", payment_id: "XXX" });
                     }

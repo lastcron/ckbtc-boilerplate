@@ -17,6 +17,9 @@ const publicroutes_1 = __importDefault(require("./public/routes/publicroutes"));
 const protectedroutes_1 = __importDefault(require("./protected/routes/protectedroutes"));
 const config_1 = __importDefault(require("./db/config"));
 const user_1 = __importDefault(require("./db/models/user"));
+const merchant_1 = __importDefault(require("./db/models/merchant"));
+const transaction_1 = __importDefault(require("./db/models/transaction"));
+const terminal_1 = __importDefault(require("./db/models/terminal"));
 // debug library
 const debug = require("debug");
 // defintion of a logging descriptor
@@ -32,11 +35,20 @@ index_1.default.listen(port, () => __awaiter(void 0, void 0, void 0, function* (
     server("Server listening on Port: ", port);
     try {
         yield config_1.default.authenticate();
-        console.log('Connection to databse has been established successfully.');
+        console.log('Connection to database has been established successfully.');
         //Checks if the User tables exits otherwise it creates it. If the NODE_ENV file is set to 'development' it will alsto apply any new 
         //changes of the model.
         const isDev = process.env.NODE_ENV === 'development';
-        user_1.default.sync({ alter: isDev });
+        const dbInit = () => {
+            //Create Database ckbtc
+            //Create  Tables if they do not exist (Only if isDev is = to TRUE)
+            user_1.default.sync({ alter: isDev });
+            merchant_1.default.sync({ alter: isDev });
+            transaction_1.default.sync({ alter: isDev });
+            terminal_1.default.sync({ alter: isDev });
+            console.log('Tables sinchronization successfully done');
+        };
+        dbInit();
     }
     catch (error) {
         console.error('Unable to connect to the database:', error);

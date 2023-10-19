@@ -4,6 +4,7 @@ import { Sequelize,Op, Model, DataTypes } from 'sequelize'
 import sequelizeConnection from '../../db/config';
 const sequelize = sequelizeConnection;
 import User from '../../db/models/user';
+import {create} from '../services/transactionService';
 
 // debug library
 import debug = require('debug');
@@ -101,7 +102,11 @@ const protectedEndpointLog = debug('ckBTC-PaymentConnector:protectedEndpoints');
           const amount=req.query.amount;
           const terminal=req.query.terminal;
          //save payment request with status pending on the database
+         const payload: TransactionAttributes = {
 
+         }
+
+         transactionService.create(payload);
          
          //return object with qrcode and paymentid
 

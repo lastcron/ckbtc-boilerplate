@@ -20,7 +20,7 @@ TESTING JWT TOKEN
 eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJja0JUQyIsIlVzZXJuYW1lIjoiY2tCVENBcGkiLCJleHAiOjE5MTY5NzM2NjMsImlhdCI6MTY5NjA0ODg2M30
 
 MySQL CONTAINER COMMAND FOR TESTING
-docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=password -d mysql:tag
 
 ##### VERY Important Notes. READ BEFORE IMPLEMENTING
 
@@ -62,4 +62,9 @@ This Restufl API has been built with production grade quality aimed to distribut
 ##### Next Steps for connecting to your database.:
 * If using any SQL Data layer for persistance,  next step would be to add Sequalize. https://sequelize.org/docs/v6/getting-started/ 
 * If using NoSQL like MongoDB for persistance , next step would be to add the connector
+* npm install --save pg pg-hstore # Postgres
+* npm install --save mysql2
+* npm install --save mariadb
+* npm install --save sqlite3
+* npm install --save tedious # Microsoft SQL Server
 
