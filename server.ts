@@ -34,7 +34,7 @@ App.listen(port, async () => {
         const dbInit = () => {
          //Create Database ckbtc
          
-         //Create  Tables if they do not exist (Only if isDev is = to TRUE)
+         //Create  Tables if they do not exist (Only if isDev is = to TRUE )
         User.sync({ alter: isDev });
         Merchant.sync({ alter: isDev });
         Transaction.sync({ alter: isDev });
