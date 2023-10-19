@@ -5,6 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const debug = require("debug");
+const protectedEndpointLog = debug('ckBTC-PaymentConnector:protectedEndpoints');
 //Loding env variables
 dotenv_1.default.config();
 //function that authenticates the JWT Token
@@ -24,9 +26,7 @@ function authenticateToken(req, res, next) {
             return res.sendStatus(403);
         }
         else {
-            //if the token is valid asign the user to the req.user object
-            console.log(user);
-            req.user = user;
+            protectedEndpointLog("JWT VALID");
         }
         // continue execution
         next();

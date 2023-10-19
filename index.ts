@@ -9,7 +9,7 @@ import morgan from 'morgan';
 // debug library
 import debug = require('debug');
 // defintion of a logging descriptor
-const server = debug('HelloWorldAPI:server');
+const server = debug('ckBTC-PaymentConnector:server');
 
 //Redis & Redis Store
 import Redis from 'ioredis';
@@ -29,7 +29,7 @@ const app = express();
 
 //setup the redis session store and rate limiter - CHANGE IT TO TRUE TO MAKE IT WORK
 //You can run a Redis container with the following command: docker run --name my-redis -p 6379:6379 -d redis
-if (true){
+if (false){
   server("Redis Session Storage Enabled ")
   server("Redis Rate Limiter Enabled ")
   
@@ -79,10 +79,10 @@ app.use(morgan('dev'));
 
 // Treblle API Monitoring enabling , check https://treblle.com. You need to create an account and generate your 
 // apikey and project id. Make sure you create an .env file in the root of your project to add these constants.
-useTreblle(app, {
-  apiKey: process.env.TREBLLE_APIKEY,
-  projectId: process.env.TREBLLE_PROJECTID,
-  });
+//useTreblle(app, {
+//  apiKey: process.env.TREBLLE_APIKEY,
+//  projectId: process.env.TREBLLE_PROJECTID,
+//  });
 
 //instantiating the use of CORS globally for all endpoint responses
 app.use(cors());
@@ -90,8 +90,15 @@ app.use(cors());
 //instantiating the use of GZIP compression globally for all resposnses
 app.use (compression());
 
-//defining bodyparser json
-app.use(bodyParser.json());
+// Define your custom verify function
+const customVerify = (req:any, res:any, buf:any, encoding:any) => {
+  if (buf && buf.length) {
+    req.rawBody = buf.toString('utf8');
+  }
+};
+
+//defining bodyparser json and rawbody
+app.use(bodyParser.json({ verify: customVerify }));
 
 //defining bodyparser json
 app.use(bodyParser.urlencoded({ extended: true }));
