@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Merchant {
+  id           String    @id @default(uuid())
+  name         String
+  ckbtcAddress String    @map("cbk_address")
+  createdAt    DateTime  @default(now()) @map(name: "created_at")
+  updatedAt    DateTime? @updatedAt @map(name: "updated_at")
+
+  user        User[]
+  terminal    Terminal[]
+  transaction Transaction[]
+
+  @@map("merchant")
+}
+
+model Terminal {
+  id        String   @id @default(uuid())
+  username  String
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  merchant   Merchant @relation(fields: [merchantId], references: [id])
+  merchantId String   @map("merchant_id")
+
+  @@map("terminals")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  merchant   Merchant @relation(fields: [merchantId], references: [id])
+  merchantId String   @map("merchant_id")
+
+  transaction Transaction[]
+
+  @@map("users")
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  username  String
+  amount    Float
+  status    Boolean
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
+
+  merchant   Merchant @relation(fields: [merchantId], references: [id])
+  merchantId String   @map("merchant_id")
+
+  @@map("transactions")
+}

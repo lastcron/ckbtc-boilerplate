@@ -55,7 +55,6 @@ This Restful API has been built with production grade quality aimed to distribut
 * GZIP Compression enabled  
 * JWT Token has been implmented along with public endpoints and protected endpoints. * Change Token secret and Refresh Secert on the .env file  
 * Morgan package added which Log requests to console  
-* A separated version of this API using GraphQL is being done  
 * Axios Installed for externarl api requests  
 
 
