@@ -49,9 +49,11 @@ routesPublic.post("/login", (req, res) => {
         const token = loginPromiseResponse.token;
         const refreshToken = loginPromiseResponse.refreshToken;
         //Assigning refresh token in http-only cookie 365 Day
-        res.cookie('jwt', refreshToken, { httpOnly: true,
+        res.cookie('jwt', refreshToken, {
+            httpOnly: true,
             sameSite: 'none', secure: true,
-            maxAge: 365 * 24 * 60 * 60 * 1000 });
+            maxAge: 365 * 24 * 60 * 60 * 1000
+        });
         res.json({
             result, token
         });

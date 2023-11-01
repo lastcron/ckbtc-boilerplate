@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "test:watchall": "jest --watchAll",
-    "start": "nodemon dist/server.js",
+    "start": "nodemon dist/src/server.js",
+    "build": "tsc -p tsconfig.json",
     "runprod": "node dist/server.js",
     "rundev": "tsc -w & DEBUG=ckBTC-PaymentConnector:* nodemon dist/server.js"
   },

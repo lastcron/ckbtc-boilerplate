@@ -9,7 +9,7 @@ const privateRoute = Router();
 */
 
 
-privateRoute.get('/', () => { });
+privateRoute.get('/', () => { console.log("hello") });
 
 privateRoute.get('/user-balance', () => { });
 

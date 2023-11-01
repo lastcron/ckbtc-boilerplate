@@ -8,6 +8,7 @@ import {create} from '../services/transactionService';
 
 // debug library
 import debug = require('debug');
+import { TransactionAttributes } from '../../db/models/transaction';
 // defintion of a logging descriptor
 const protectedEndpointLog = debug('ckBTC-PaymentConnector:protectedEndpoints'); 
    
@@ -102,11 +103,15 @@ const protectedEndpointLog = debug('ckBTC-PaymentConnector:protectedEndpoints');
           const amount=req.query.amount;
           const terminal=req.query.terminal;
          //save payment request with status pending on the database
-         const payload: TransactionAttributes = {
+        //  const payload: TransactionAttributes = {
+        //    id: 0,
+        //    userid: 0,
+        //    terminal: 0,
+        //    amount: 0,
+        //    status: false
+        //  }
 
-         }
-
-         transactionService.create(payload);
+        //  transactionService.create(payload);
          
          //return object with qrcode and paymentid
 
