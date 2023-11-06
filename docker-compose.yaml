@@ -3,27 +3,6 @@ networks:
   ckbtc-network:
 
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: ckbtc-database
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: toor
-      MYSQL_DATABASE: ckbtc-db
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: ckbtcPassw
-    networks:
-      - ckbtc-network
-    ports:
-      - "3306:3306"
-  redis:
-    image: redis:6.2.6-alpine
-    container_name: ckbtc-redis
-    restart: always
-    networks:
-      - ckbtc-network
-    ports:
-      - "6379:6379"
   app:
     image: app
     container_name: ckbtc-api
@@ -32,3 +11,29 @@ services:
       - ckbtc-network
     ports:
       - '3000:3000'
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:8.0
+    container_name: ckbtc-database
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_USER_PASSWORD}"
+    networks:
+      - ckbtc-network
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+  redis:
+    image: redis:6.2.6-alpine
+    container_name: ckbtc-redis
+    restart: always
+    networks:
+      - ckbtc-network
+    ports:
+      - "6379:6379"
+  

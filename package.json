@@ -9,7 +9,9 @@
     "build": "tsc -p tsconfig.json",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts)\"",
     "docker:build": "docker build -t app .",
-    "docker:run": "docker-compose up -d",
+    "docker:up": "docker-compose up -d mysql app",
+    "docker:up:db": "docker-compose up -d mysql",
+    "docker:up:redis": "docker-compose up -d redis",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
