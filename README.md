@@ -24,6 +24,10 @@ or
 ```bash
   npm i
 ```
+Install prisma-cli:
+```bash
+  npm i prisma -g
+```
 
 We have to create a mysql container, if you want to use another instance, just change the variables in the `.env` file.
 
@@ -31,6 +35,16 @@ We have to create a mysql container, if you want to use another instance, just c
   npm run docker:up:db
 ```
 
+Run migrations:
+```bash
+  npx prisma migrate dev
+```
+
+Run seeders:
+```bash
+  npx prisma db seed
+```
+And finally:
 ```bash
   npm run start:dev
 ```
