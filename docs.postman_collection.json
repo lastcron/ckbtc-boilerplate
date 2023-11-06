@@ -1,0 +1,307 @@
+{
+	"info": {
+		"_postman_id": "383561a8-e29f-40c0-a8a7-c87ceac069ae",
+		"name": "ckbtc-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7840456"
+	},
+	"item": [
+		{
+			"name": "Publics",
+			"item": [
+				{
+					"name": "Get Payment History",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{TestinfUrl}}/app/payment-history/a9a4a938-d377-44e7-a732-03b81ed64c2e",
+							"host": [
+								"{{TestinfUrl}}"
+							],
+							"path": [
+								"app",
+								"payment-history",
+								"a9a4a938-d377-44e7-a732-03b81ed64c2e"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Payment History Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LocalUrl}}/app/payment-history/a9a4a938-d377-44e7-a732-03b81ed64c2e",
+									"host": [
+										"{{LocalUrl}}"
+									],
+									"path": [
+										"app",
+										"payment-history",
+										"a9a4a938-d377-44e7-a732-03b81ed64c2e"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4ae-AordICrxUac77q8spuEa18IgntM\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 06 Nov 2023 03:42:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Payment History\",\n    \"data\": [\n        {\n            \"id\": \"6e032463-17be-4174-b39c-0975cc34fe70\",\n            \"amount\": 2,\n            \"status\": true,\n            \"createdAt\": \"2023-11-06T02:55:24.152Z\",\n            \"updatedAt\": \"2023-11-06T02:55:24.152Z\",\n            \"userId\": \"a9a4a938-d377-44e7-a732-03b81ed64c2e\",\n            \"terminalId\": \"f1d21ad6-2e63-4844-97c8-99701f10616b\",\n            \"terminal\": {\n                \"name\": \"terminal-default\"\n            }\n        },\n        {\n            \"id\": \"91f0c9a6-d0b6-4deb-9e87-d3ba58960fd4\",\n            \"amount\": 2,\n            \"status\": false,\n            \"createdAt\": \"2023-11-06T03:20:58.181Z\",\n            \"updatedAt\": \"2023-11-06T03:20:58.181Z\",\n            \"userId\": \"a9a4a938-d377-44e7-a732-03b81ed64c2e\",\n            \"terminalId\": \"f1d21ad6-2e63-4844-97c8-99701f10616b\",\n            \"terminal\": {\n                \"name\": \"terminal-default\"\n            }\n        },\n        {\n            \"id\": \"e245d9c8-9d54-4fed-a469-945c5bda7b1c\",\n            \"amount\": 1.99,\n            \"status\": false,\n            \"createdAt\": \"2023-11-06T02:55:24.152Z\",\n            \"updatedAt\": \"2023-11-06T02:55:24.152Z\",\n            \"userId\": \"a9a4a938-d377-44e7-a732-03b81ed64c2e\",\n            \"terminalId\": \"f1d21ad6-2e63-4844-97c8-99701f10616b\",\n            \"terminal\": {\n                \"name\": \"terminal-default\"\n            }\n        },\n        {\n            \"id\": \"f530c767-7d7a-4c91-becc-2ca4455eccaa\",\n            \"amount\": 4.99,\n            \"status\": true,\n            \"createdAt\": \"2023-11-06T02:55:24.152Z\",\n            \"updatedAt\": \"2023-11-06T02:55:24.152Z\",\n            \"userId\": \"a9a4a938-d377-44e7-a732-03b81ed64c2e\",\n            \"terminalId\": \"f1d21ad6-2e63-4844-97c8-99701f10616b\",\n            \"terminal\": {\n                \"name\": \"terminal-default\"\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get User Balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{TestinfUrl}}/app/user-balance/a9a4a938-d377-44e7-a732-03b81ed64c2e",
+							"host": [
+								"{{TestinfUrl}}"
+							],
+							"path": [
+								"app",
+								"user-balance",
+								"a9a4a938-d377-44e7-a732-03b81ed64c2e"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Request example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/app/user-balance/a9a4a938-d377-44e7-a732-03b81ed64c2e",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"app",
+										"user-balance",
+										"a9a4a938-d377-44e7-a732-03b81ed64c2e"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "268"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10c-Tm1JVirHSeIWRaOalPCaEoQgH8s\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 06 Nov 2023 03:05:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"messsage\": \"UserBalance\",\n    \"data\": {\n        \"id\": \"a9a4a938-d377-44e7-a732-03b81ed64c2e\",\n        \"username\": \"superUser01\",\n        \"createdAt\": \"2023-11-06T02:55:24.132Z\",\n        \"updatedAt\": \"2023-11-06T02:55:24.132Z\",\n        \"merchantId\": \"0a51170c-9188-4862-87f2-21b671cb4100\",\n        \"merchant\": {\n            \"ckbtcAddress\": \"123\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Payment Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"a9a4a938-d377-44e7-a732-03b81ed64c2e\",\n    \"terminalId\": \"f1d21ad6-2e63-4844-97c8-99701f10616b\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{TestinfUrl}}/app/payment-request",
+							"host": [
+								"{{TestinfUrl}}"
+							],
+							"path": [
+								"app",
+								"payment-request"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Payment Request Example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": \"a9a4a938-d377-44e7-a732-03b81ed64c2e\",\n    \"terminalId\": \"f1d21ad6-2e63-4844-97c8-99701f10616b\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/app/payment-request",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"app",
+										"payment-request"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "533"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"215-xxu5nXLSRugMwdsDwmTG8rGpRf8\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 06 Nov 2023 03:20:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Request Created\",\n    \"data\": {\n        \"id\": \"91f0c9a6-d0b6-4deb-9e87-d3ba58960fd4\",\n        \"amount\": 2,\n        \"status\": false,\n        \"createdAt\": \"2023-11-06T03:20:58.181Z\",\n        \"updatedAt\": \"2023-11-06T03:20:58.181Z\",\n        \"userId\": \"a9a4a938-d377-44e7-a732-03b81ed64c2e\",\n        \"terminalId\": \"f1d21ad6-2e63-4844-97c8-99701f10616b\",\n        \"terminal\": {\n            \"id\": \"f1d21ad6-2e63-4844-97c8-99701f10616b\",\n            \"name\": \"terminal-default\",\n            \"createdAt\": \"2023-11-06T02:55:24.119Z\",\n            \"updatedAt\": \"2023-11-06T02:55:24.119Z\",\n            \"merchantId\": \"0a51170c-9188-4862-87f2-21b671cb4100\",\n            \"merchant\": {\n                \"ckbtcAddress\": \"123\"\n            }\n        }\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "TestinfUrl",
+			"value": "localhost:3000",
+			"type": "string"
+		}
+	]
+}
