@@ -5,6 +5,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # copy oter files as well
+RUN npm run build
 COPY dist/server.js .
 
 #expose the port
