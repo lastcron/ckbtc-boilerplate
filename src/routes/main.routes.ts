@@ -1,4 +1,11 @@
 import { Router } from 'express';
+import {
+    getUserBalance,
+    createPaymentRequest,
+    getPaymentStatus,
+    getPaymentReceived,
+    getPaymentHistory
+} from '../controllers/main.controller'
 
 const publicRoute = Router();
 const privateRoute = Router();
@@ -9,17 +16,17 @@ const privateRoute = Router();
 */
 
 
-privateRoute.get('/', () => { console.log("hello") });
+privateRoute.get('/', () => { console.log("Hello this is v1") });
 
-privateRoute.get('/user-balance', () => { });
+privateRoute.get('/user-balance/:uid', getUserBalance);
 
-privateRoute.get('/paymentrequest', () => { });
+privateRoute.get('/payment-status', getPaymentStatus);
 
-privateRoute.get('/payment-status', () => { });
+privateRoute.get('/payment-received', getPaymentReceived);
 
-privateRoute.get('/payment-received', () => { });
+privateRoute.get('/payment-history/:uid', getPaymentHistory);
 
-privateRoute.get('/payments-history', () => { });
+privateRoute.post('/payment-request', createPaymentRequest);
 
 /* 
  PUBLIC ROUTES  
