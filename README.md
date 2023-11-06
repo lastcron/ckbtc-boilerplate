@@ -2,65 +2,42 @@
 
 Hello There! ✌🏽
 
-## Installation
-
-Install my-project with npm
-
-```bash
-  npm install i
-  npm start
-```
-
-
-Available commands
-
-```bash
-  npm start
-  npm run lint
-  npm run format
-  npm run build
-  npm run tests
-```
 ## Run Locally
 
-Clone the project
+#### Docker installation
 
+At first rename the `.env-example` to `.env`, then:
+
+Build the image:
 ```bash
-  git clone https://link-to-project
+  npm run docker:build
+```
+Start all services:
+```bash
+  npm run docker:up
 ```
 
-Go to the project directory
+or
+
+#### Manual installation
 
 ```bash
-  cd my-project
+  npm i
 ```
 
-Install dependencies
+We have to create a mysql container, if you want to use another instance, just change the variables in the `.env` file.
 
 ```bash
-  npm install
+  npm run docker:up:db
 ```
-
-Start the server
 
 ```bash
-  npm run start
+  npm run start:dev
 ```
-
-
 ## API Reference
 We have two kinds of endpoints here `public` and `private`.
 
 More details in: Postman Collection
-
-## Deployment
-
-To deploy this project run
-
-```bash
-  npm run deploy
-```
-
 
 ## Used By
 
