@@ -1,15 +1,15 @@
-# from base image node
-FROM node:18.13.0-alpine3.16
+FROM node:18-alpine
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# copy oter files as well
+COPY package.json package-lock.json ./
+
+RUN npm install
+
+COPY . .
+
 RUN npm run build
-COPY dist/server.js .
 
-#expose the port
 EXPOSE 3000
 
-# command to run when intantiate an image
-CMD ["node","dist/server.js"]
+CMD ["sh", "-c","npm run build; npx prisma migrate deploy --preview-feature  ; npm prisma generate ; npm prisma db seed ; npm start"]
