@@ -4,10 +4,12 @@
   "description": "ckBTC Payment Conector",
   "main": "server.js",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "tsc -p tsconfig.json & node dist/src/server.js",
     "start:dev": "nodemon",
     "build": "tsc -p tsconfig.json",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts)\"",
+    "docker:build": "docker build -t app .",
+    "docker:run": "docker-compose up -d",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },

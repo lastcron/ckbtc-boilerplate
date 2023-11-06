@@ -1,4 +1,6 @@
 version: "3.9"
+networks:
+  ckbtc-network:
 
 services:
   mysql:
@@ -10,12 +12,23 @@ services:
       MYSQL_DATABASE: ckbtc-db
       MYSQL_USER: admin
       MYSQL_PASSWORD: ckbtcPassw
+    networks:
+      - ckbtc-network
     ports:
       - "3306:3306"
-
   redis:
     image: redis:6.2.6-alpine
     container_name: ckbtc-redis
     restart: always
+    networks:
+      - ckbtc-network
     ports:
       - "6379:6379"
+  app:
+    image: app
+    container_name: ckbtc-api
+    restart: always
+    networks:
+      - ckbtc-network
+    ports:
+      - '3000:3000'
