@@ -4,7 +4,8 @@ async function main() {
   const merchant = await prisma.merchant.create({
     data: {
       name: 'Merch-01',
-      ckbtcAddress: '123',
+      ckbtcAddress:
+        'nhk6f-gnhhq-yntfr-55swx-watqv-7g23y-kpp2p-wg76j-tue6q-lu3lu-sqe',
     },
   })
 

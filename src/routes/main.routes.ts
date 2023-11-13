@@ -5,6 +5,7 @@ import {
   getPaymentStatus,
   getPaymentReceived,
   getPaymentHistory,
+  ckbtcTesting,
 } from '../controllers/main.controller'
 
 const publicRoute = Router()
@@ -28,6 +29,8 @@ privateRoute.get('/payment-received', getPaymentReceived)
 privateRoute.get('/payment-history/:uid', getPaymentHistory)
 
 privateRoute.post('/payment-request', createPaymentRequest)
+
+privateRoute.post('/test', ckbtcTesting)
 
 /* 
  PUBLIC ROUTES  

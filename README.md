@@ -53,10 +53,3 @@ We have two kinds of endpoints here `public` and `private`.
 
 More details in: Postman Collection
 
-## Used By
-
-This project is used by the following companies:
-
-- Company 1
-- Company 2
-
