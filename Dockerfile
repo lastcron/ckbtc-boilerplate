@@ -1,14 +1,13 @@
-# from base image node
-FROM node:18.13.0-alpine3.16
+FROM node:18-alpine
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /home/app
 
-# copy oter files as well
-COPY dist/server.js .
+COPY package*.json ./
 
-#expose the port
-EXPOSE 3000
+COPY . .
 
-# command to run when intantiate an image
-CMD ["node","dist/server.js"]
+RUN yarn install
+RUN yarn build
+RUN yarn global add prisma
+
+CMD ["sh", "-c","npx prisma migrate deploy --preview-feature  ; npx prisma generate ; npx prisma db seed ; yarn start"]
