@@ -51,5 +51,5 @@ And finally:
 ## API Reference
 We have two kinds of endpoints here `public` and `private`.
 
-More details in: Postman Collection
+More details in: [Postman Collection](https://github.com/lastcron/ckbtc-boilerplate/blob/production/docs.postman_collection.json)
 
