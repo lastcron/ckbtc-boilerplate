@@ -15,11 +15,6 @@ const privateRoute = Router()
  PRIVATE ROUTES  
  *********************************************
 */
-
-privateRoute.get('/', () => {
-  console.log('Hello this is v1')
-})
-
 privateRoute.get('/user-balance/:uid', getUserBalance)
 
 privateRoute.get('/payment-status', getPaymentStatus)
@@ -37,14 +32,16 @@ privateRoute.post('/test', ckbtcTesting)
  *********************************************
 */
 
-publicRoute.get('/', () => {})
+publicRoute.get('/', () => {
+  console.log('Hello this is v1')
+})
 
-publicRoute.post('/login', () => {})
+publicRoute.post('/login', () => { })
 
-publicRoute.post('/refresh', () => {})
+publicRoute.post('/refresh', () => { })
 
-publicRoute.post('/recover', () => {})
+publicRoute.post('/recover', () => { })
 
-publicRoute.post('/register', () => {})
+publicRoute.post('/register', () => { })
 
 export { publicRoute, privateRoute }
