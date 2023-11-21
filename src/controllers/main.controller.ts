@@ -115,35 +115,40 @@ const ckbtcTesting = async (req: Request, res: Response) => {
     host: "https://icp-api.io"
   });
 
-  const { getBtcAddress, getMinterInfo } = CkBTCMinterCanister.create({
+  const { transferFrom, allowance, transactionFee, balance, approve, transfer } = IcrcLedgerCanister.create({
     agent,
-    canisterId: "mqygn-kiaaa-aaaar-qaadq-cai" as any,
+    canisterId: Principal.from('hngac-6aaaa-aaaal-qb6tq-cai'),
   });
 
-  // const minterInfo = await getMinterInfo({});
-  const btcAddress = await getBtcAddress({});
-  // res.send({ btcAddress, minter: JSON.stringify(minterInfo, (_, v) => typeof v === 'bigint' ? v.toString() : v) })
+  // Approve method
+  const approveTransaction =
+    await approve({
+      spender: { owner: Principal.fromText("nhk6f-gnhhq-yntfr-55swx-watqv-7g23y-kpp2p-wg76j-tue6q-lu3lu-sqe"), subaccount: [] },
+      fee: BigInt(10),
+      amount: BigInt(60),
+      expected_allowance: BigInt(60)
+    });
+  // Check allowance
+  const checkAllowance = await allowance({
+    account: {
+      owner: Principal.fromText("q63w7-ufrr7-4kivg-no334-2vih6-wcdqr-i3ryl-ycu5s-ao6sf-maano-vae"),
+      subaccount: []
+    },
+    spender: {
+      owner: Principal.fromText("nhk6f-gnhhq-yntfr-55swx-watqv-7g23y-kpp2p-wg76j-tue6q-lu3lu-sqe"),
+      subaccount: []
+    }
+  });
 
-  // const ledger = LedgerCanister.create()
-  // const accountIdentifier = AccountIdentifier.fromHex("6e686b3666676e686871796e7466723535737778776174717637673233796b70703270776737366a74756536716c75336c75737165");
+  // Creat transfer
+  const transferAction = await transferFrom({
+    from: { owner: Principal.fromText("nhk6f-gnhhq-yntfr-55swx-watqv-7g23y-kpp2p-wg76j-tue6q-lu3lu-sqe"), subaccount: [] },
+    to: { owner: Principal.fromText("q63w7-ufrr7-4kivg-no334-2vih6-wcdqr-i3ryl-ycu5s-ao6sf-maano-vae"), subaccount: [] },
+    amount: BigInt(60),
+    fee: BigInt(10),
+  })
 
-  // const { accountBalance } = LedgerCanister.create({
-  //   // agent,
-  //   // canisterId: "mqygn-kiaaa-aaaar-qaadq-cai" as any
-  // })
-  // const { accountBalance } = LedgerCanister.create()
-
-  // const userBalance = await accountBalance({ accountIdentifier });
-  res.send({ userBalance: btcAddress })
-
-
-  // const ledger = LedgerCanister.create();
-
-  // const accountIdentifier = AccountIdentifier.fromHex("6e686b3666676e686871796e7466723535737778776174717637673233796b70703270776737366a74756536716c75336c75737165");
-
-  // const balance = await ledger.accountBalance({ accountIdentifier });
-
-  // res.send({ balance });
+  return { approveTransaction, checkAllowance, transferAction };
 }
 
 export {
